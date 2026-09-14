@@ -23,9 +23,18 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
 #----------------------------------------------
 
+#----------------------------------------------
+# router example
+import router_example
+#----------------------------------------------
+
+
 #############################
 # Main app instantiated
 app = FastAPI()
+
+# routers added here:
+app.include_router(router_example.router)
 #############################
 
 # Root endpoint. Maybe redirect from here
