@@ -10,8 +10,6 @@ from sqlalchemy.orm import (
 from sqlalchemy import create_engine
 
 
-
-
 DATABASE_URL = r"sqlite:///./test.db"
 engine = create_engine(DATABASE_URL)
 
