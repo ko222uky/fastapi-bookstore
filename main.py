@@ -51,8 +51,13 @@ app = FastAPI()
 app.include_router(router_example.router)
 #############################
 
+
+
+
 #################################
-# Example with users endpoint to get all users
+# Example endpoints that interact with the database
+
+# users endpoint to get all users
 @app.get("/users")
 async def read_users(db: Session = Depends(get_db)):
     users = db.query(User).all()
@@ -89,14 +94,28 @@ def get_user(
             detail="User not found"
         )
     return user
+
+# # endpoint to delete a user
+@app.delete("/user")
+def delete_user(
+    user_id: int, db: Session = Depends(get_db)
+):
+    db_user = (
+        db.query(User).filter(
+            User.id == user_id
+        )
+    )
+    if db_user is None:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+    db.delete(db_user)
+    db.commit()
+    return {"detail": "User deleted"}
+
+
 ################################
-
-
-
-
-
-
-
 
 # Root endpoint. Maybe redirect from here
 @app.get("/")
